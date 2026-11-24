@@ -13,7 +13,7 @@ Consume la API de solo lectura de [Bitácora API](https://github.com/ChTole/bita
 - [x] Tablero de una simulación: filtros y tarjetas de métricas.
 - [x] Gráficos de resumen, evolución y comparación por mueble.
 - [x] Gráficos de dificultades: fallas por motivo y mapa de calor por caja.
-- [ ] Sesiones: búsqueda por alias y recorrido de una sesión.
+- [x] Sesiones: búsqueda por alias y recorrido de una sesión.
 - [ ] Publicación en Netlify.
 
 ## Stack
@@ -46,6 +46,17 @@ docker compose -f docker-compose-dev.yml exec web npm install <paquete>
 docker compose -f docker-compose-dev.yml exec web npx ng test --watch=false
 ```
 
+## Páginas
+
+| Ruta | Contenido |
+|---|---|
+| `/` | Simulaciones con datos |
+| `/{simulación}` | Tablero: métricas, resumen, evolución, comparación y dificultades |
+| `/{simulación}/sesiones?alias=...` | Sesiones cerradas, con búsqueda por alias |
+| `/{simulación}/sesiones/{id}` | Detalle de una sesión, con su recorrido |
+
+La búsqueda acepta el alias en la URL, así que una simulación puede enlazar directamente a la sesión que se acaba de terminar, por ejemplo `/taller-ensamblado/sesiones?alias=Tero%20Alegre`.
+
 ## Configuración
 
 La URL de la API está en `src/environments`:
@@ -65,7 +76,7 @@ En producción, el dominio del tablero tiene que estar en `CORS_ALLOWED_ORIGINS`
 src/app/
 ├── core/          Acceso a la API, tipos, formatos y estado del servidor
 ├── charts/        Gráficos, su paleta y los módulos de ECharts que usan
-└── pages/         Una carpeta por página: inicio y tablero de una simulación
+└── pages/         Una carpeta por página: inicio, tablero, sesiones y detalle de una sesión
 ```
 
 ## Licencia

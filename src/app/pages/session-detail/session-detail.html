@@ -1,0 +1,82 @@
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Simulaciones</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/', simulationId()]">Tablero</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/', simulationId(), 'sesiones']">Sesiones</a></li>
+      <li class="breadcrumb-item active" aria-current="page">
+        {{ session.hasValue() ? session.value().alias : 'Sesión' }}
+      </li>
+    </ol>
+  </nav>
+
+  @if (notFound()) {
+    <div class="alert alert-warning">La sesión no existe o todavía está en curso.</div>
+  } @else if (session.error()) {
+    <div class="alert alert-danger">No se pudo cargar la sesión.</div>
+  } @else if (session.hasValue()) {
+    @let data = session.value();
+    @let summary = data.summary;
+
+    <h1 class="h2 mb-1">{{ data.alias }}</h1>
+    <p class="text-body-secondary mb-4">
+      {{ furnitureName(data.context.furniture_id) }} ·
+      {{ data.context.mobile ? 'Móvil' : 'Escritorio' }} ·
+      {{ data.started_at | date: "d/M/yyyy, HH:mm" }}
+      @if (data.closed_by === 'server') {
+        · Cerrada por inactividad
+      }
+    </p>
+
+    @if (summary) {
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-lg">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <div class="text-body-secondary small">Resultado</div>
+            <div class="fs-5 fw-bold mt-1"><app-outcome-badge [outcome]="outcome(data)" /></div>
+          </div></div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <div class="text-body-secondary small">Duración</div>
+            <div class="kpi-value">{{ formatSeconds(summary.duration_seconds) }}</div>
+          </div></div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <div class="text-body-secondary small">Uniones</div>
+            <div class="kpi-value">{{ summary.joints_completed }} de {{ summary.joints_total ?? '—' }}</div>
+            @if (summary.incorrect_joints) {
+              <div class="kpi-note">{{ summary.incorrect_joints }} en un lugar incorrecto</div>
+            }
+          </div></div>
+        </div>
+        <div class="col-6 col-lg">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <div class="text-body-secondary small">Intentos fallidos</div>
+            <div class="kpi-value">{{ summary.failed_attempts }}</div>
+          </div></div>
+        </div>
+        <div class="col-12 col-lg">
+          <div class="card h-100 shadow-sm"><div class="card-body">
+            <div class="text-body-secondary small">Ayuda</div>
+            <div class="kpi-value">{{ summary.help_requests }} {{ summary.help_requests === 1 ? 'vez' : 'veces' }}</div>
+            <div class="kpi-note">{{ formatSeconds(summary.help_seconds) }} en total</div>
+          </div></div>
+        </div>
+      </div>
+
+      @if (summary.consistent === false) {
+        <div class="alert alert-secondary small">
+          Algunos eventos de esta sesión no llegaron al servidor: el recorrido puede estar incompleto.
+        </div>
+      }
+    } @else {
+      <div class="alert alert-secondary small">Esta sesión no tiene resumen de métricas.</div>
+    }
+
+    <app-session-journey [events]="data.events" />
+  } @else {
+    <p class="text-body-secondary">Cargando la sesión…</p>
+  }
+</div>

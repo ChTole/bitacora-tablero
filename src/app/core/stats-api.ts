@@ -2,7 +2,7 @@ import { httpResource } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
-import { Failures, Filters, GroupBy, SimulationList, Summary, Timeline } from './models';
+import { Failures, Filters, GroupBy, SessionDetail, SessionPage, SimulationList, Summary, Timeline } from './models';
 
 const BASE = `${environment.apiBaseUrl}/stats/v1`;
 
@@ -49,5 +49,23 @@ export class StatsApi {
       url: `${BASE}/simulations/${simulationId()}/failures`,
       params: toParams(filters()),
     }));
+  }
+
+  sessions(simulationId: () => string, query: () => { alias?: string; before?: string | null; limit?: number }) {
+    return httpResource<SessionPage>(() => {
+      const { alias, before, limit } = query();
+      return {
+        url: `${BASE}/simulations/${simulationId()}/sessions`,
+        params: toParams({}, {
+          ...(alias ? { alias } : {}),
+          ...(before ? { before } : {}),
+          limit: String(limit ?? 20),
+        }),
+      };
+    });
+  }
+
+  session(simulationId: () => string, id: () => string) {
+    return httpResource<SessionDetail>(() => `${BASE}/simulations/${simulationId()}/sessions/${id()}`);
   }
 }

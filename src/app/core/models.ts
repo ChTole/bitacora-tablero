@@ -90,3 +90,52 @@ export interface Failures {
   simulation_id: string;
   mortises: MortiseFailures[];
 }
+
+/** Resumen de una sesión del Taller (ver docs/metricas.md de bitacora-api). */
+export interface SessionSummary {
+  source: 'client' | 'events';
+  outcome: 'checked' | 'abandoned' | 'none';
+  completed: boolean;
+  correct: boolean;
+  duration_seconds: number | null;
+  time_to_first_joint_seconds: number | null;
+  joints_total: number | null;
+  joints_completed: number;
+  incorrect_joints: number;
+  connections: number;
+  undos: number;
+  detaches: number;
+  failed_attempts: number;
+  failures_by_reason: Record<string, number>;
+  help_requests: number;
+  help_seconds: number;
+  consistent: boolean | null;
+}
+
+export interface SessionItem {
+  id: string;
+  alias: string;
+  status: 'completed' | 'abandoned';
+  closed_by: 'client' | 'server' | null;
+  started_at: string;
+  finished_at: string | null;
+  event_count: number;
+  context: { furniture_id?: string; app_version?: string; mobile?: boolean; joints_total?: number };
+  summary: SessionSummary | null;
+}
+
+export interface SessionPage {
+  sessions: SessionItem[];
+  next: string | null;
+}
+
+export interface SessionEvent {
+  sequence: number;
+  timestamp: string;
+  type: string;
+  data: Record<string, unknown> | null;
+}
+
+export interface SessionDetail extends SessionItem {
+  events: SessionEvent[];
+}

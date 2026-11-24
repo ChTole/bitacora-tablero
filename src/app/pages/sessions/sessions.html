@@ -1,0 +1,87 @@
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Simulaciones</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/', simulationId()]">Tablero</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Sesiones</li>
+    </ol>
+  </nav>
+
+  <h1 class="h2 mb-2">Sesiones</h1>
+  <p class="text-body-secondary mb-4">
+    Al terminar una simulación, el resumen muestra un alias, por ejemplo "Carpincho Turquesa". Buscalo acá para ver tu
+    recorrido. Las sesiones son anónimas.
+  </p>
+
+  <form class="row g-2 mb-4" role="search" (submit)="$event.preventDefault(); search(aliasInput.value)">
+    <div class="col-sm-8 col-md-6">
+      <label class="visually-hidden" for="alias">Alias</label>
+      <input #aliasInput id="alias" class="form-control" type="search" placeholder="Buscar por alias" [value]="alias() ?? ''" />
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-primary" type="submit">Buscar</button>
+    </div>
+    @if (alias()) {
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" type="button" (click)="search('')">Ver todas</button>
+      </div>
+    }
+  </form>
+
+  @if (result.error()) {
+    <div class="alert alert-danger">No se pudieron cargar las sesiones.</div>
+  } @else if (result.hasValue() || result.isLoading()) {
+    <div class="card shadow-sm" [class.opacity-50]="result.isLoading()">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Alias</th>
+              <th scope="col">Mueble</th>
+              <th scope="col">Inicio</th>
+              <th scope="col">Duración</th>
+              <th scope="col">Resultado</th>
+              <th scope="col" class="text-end">Intentos fallidos</th>
+              <th scope="col" class="text-end">Ayuda</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (session of sessions(); track session.id) {
+              <tr>
+                <td><a [routerLink]="[session.id]" class="fw-bold">{{ session.alias }}</a></td>
+                <td>{{ furnitureName(session.context.furniture_id) }}</td>
+                <td class="text-nowrap">{{ session.started_at | date: 'd/M/yyyy, HH:mm' }}</td>
+                <td>{{ formatSeconds(session.summary?.duration_seconds) }}</td>
+                <td><app-outcome-badge [outcome]="outcome(session)" /></td>
+                <td class="text-end">{{ session.summary?.failed_attempts ?? '—' }}</td>
+                <td class="text-end">{{ session.summary?.help_requests ?? '—' }}</td>
+              </tr>
+            } @empty {
+              @if (!result.isLoading()) {
+                <tr>
+                  <td colspan="7" class="text-body-secondary py-4 text-center">
+                    @if (alias()) {
+                      No hay sesiones cerradas con el alias "{{ alias() }}".
+                    } @else {
+                      Todavía no hay sesiones cerradas.
+                    }
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <nav class="d-flex justify-content-between align-items-center mt-3" aria-label="Páginas">
+      <button class="btn btn-outline-primary" type="button" [disabled]="page() === 1" (click)="previousPage()">
+        Más recientes
+      </button>
+      <span class="small text-body-secondary">Página {{ page() }}</span>
+      <button class="btn btn-outline-primary" type="button" [disabled]="!next()" (click)="nextPage()">
+        Más antiguas
+      </button>
+    </nav>
+  }
+</div>
