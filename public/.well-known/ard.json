@@ -1,0 +1,17 @@
+{
+  "entries": [
+    {
+      "identifier": "urn:air:chtole:bitacora:stats-api",
+      "displayName": "Bitácora API · Estadísticas",
+      "type": "application/json",
+      "description": "API JSON pública y de solo lectura con las métricas agregadas y las sesiones cerradas.",
+      "url": "https://bitacora-api-i1b6.onrender.com/stats/v1/simulations",
+      "documentation": "https://github.com/ChTole/bitacora-api/blob/main/docs/api-tablero.md",
+      "representativeQueries": [
+        "API de métricas de simulaciones educativas",
+        "datos de sesiones del Taller de Ensamblado en JSON",
+        "tasa de éxito y errores por mueble"
+      ]
+    }
+  ]
+}

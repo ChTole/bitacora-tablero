@@ -1,0 +1,26 @@
+# Bitácora · Tablero
+
+> Tablero público de métricas de aprendizaje de simulaciones educativas que registran su telemetría con Bitácora: tiempos, errores, uniones y uso de la ayuda, a partir de datos anónimos de cada sesión. La primera simulación es el Taller de Ensamblado, una simulación de carpintería en el navegador.
+
+El tablero es una aplicación de una sola página: el contenido se carga desde una API pública de solo lectura, que también se puede consultar directamente.
+
+## Páginas
+
+- [Simulaciones](https://bitacora-tablero.netlify.app/): simulaciones con datos.
+- [Taller de Ensamblado](https://bitacora-tablero.netlify.app/taller-ensamblado): métricas generales, evolución, comparación por mueble y dificultades.
+- [Sesiones](https://bitacora-tablero.netlify.app/taller-ensamblado/sesiones): sesiones cerradas, con búsqueda por alias (`?alias=Carpincho%20Turquesa`).
+
+## API de datos (JSON, sin clave)
+
+- [Simulaciones](https://bitacora-api-i1b6.onrender.com/stats/v1/simulations)
+- [Métricas del Taller](https://bitacora-api-i1b6.onrender.com/stats/v1/simulations/taller-ensamblado/summary): acepta `furniture_id`, `mobile`, `from`, `to` y `group_by`.
+- [Contrato de la API del tablero](https://github.com/ChTole/bitacora-api/blob/main/docs/api-tablero.md): todos los endpoints, filtros y definiciones de cada métrica.
+
+La API corre en un plan gratuito: si no se usó recientemente, la primera respuesta puede tardar alrededor de un minuto.
+
+## Proyectos relacionados
+
+- [Taller de Ensamblado](https://taller-de-ensamblado.netlify.app): la simulación.
+- [Bitácora](https://github.com/ChTole/bitacora): package de Unity que registra la telemetría.
+- [Bitácora API](https://github.com/ChTole/bitacora-api): servidor de sesiones, eventos y métricas.
+- [Portfolio](https://christiantoledo-dev.netlify.app): autor y otros proyectos.

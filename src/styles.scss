@@ -7,6 +7,8 @@ $warning: #7a5a12;
 $body-color: #4a5a61;
 $headings-color: #2b4a57;
 $body-bg: #f4f5f5;
+// Texto secundario (notas, fechas, pie): opaco y no transparente, para un contraste de 5,5:1 o más
+$body-secondary-color: #56656b;
 $font-family-sans-serif: 'Lato', 'Segoe UI', system-ui, -apple-system, sans-serif;
 $link-color: $primary;
 $border-radius: 0.5rem;
@@ -51,4 +53,9 @@ details > summary {
   width: 10px;
   height: 10px;
   border-radius: 50%;
+}
+
+// Texto secundario sobre la barra superior: contraste 7:1 con el azul petróleo
+.navbar-subtitle {
+  color: #d5dfe3;
 }
