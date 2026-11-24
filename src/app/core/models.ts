@@ -78,3 +78,15 @@ export interface Timeline {
   tz: string;
   days: TimelineDay[];
 }
+
+export interface MortiseFailures {
+  mortise: string;
+  failures: number;
+  sessions: number;
+  by_reason: Record<string, number>;
+}
+
+export interface Failures {
+  simulation_id: string;
+  mortises: MortiseFailures[];
+}

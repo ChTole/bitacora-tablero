@@ -12,7 +12,7 @@ Consume la API de solo lectura de [Bitácora API](https://github.com/ChTole/bita
 - [x] Página principal con las simulaciones.
 - [x] Tablero de una simulación: filtros y tarjetas de métricas.
 - [x] Gráficos de resumen, evolución y comparación por mueble.
-- [ ] Gráficos de dificultades: fallas por motivo y por caja.
+- [x] Gráficos de dificultades: fallas por motivo y mapa de calor por caja.
 - [ ] Sesiones: búsqueda por alias y recorrido de una sesión.
 - [ ] Publicación en Netlify.
 

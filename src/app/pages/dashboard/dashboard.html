@@ -113,6 +113,37 @@
         <app-help-impact [metrics]="data.metrics" />
       </div>
     </div>
+
+    <!-- Dificultades -->
+    <h2 class="h4 mt-5 mb-3">Dificultades</h2>
+    <div class="row g-3">
+      <div class="col-lg-5">
+        <app-failure-reasons [reasons]="data.metrics.failures_by_reason" />
+      </div>
+      <div class="col-lg-7" [class.opacity-50]="failures.isLoading()">
+        @if (failures.error()) {
+          <div class="alert alert-warning">No se pudieron cargar las fallas por caja.</div>
+        } @else {
+          <app-mortise-heatmap [mortises]="mortises()">
+            @if (!furniture()) {
+              <div class="mb-2">
+                <label class="form-label small mb-1" for="heatmap-furniture">Mueble</label>
+                <select
+                  id="heatmap-furniture"
+                  class="form-select form-select-sm w-auto"
+                  [value]="heatmapChoice()"
+                  (change)="heatmapChoice.set($any($event.target).value)"
+                >
+                  @for (option of furnitureOptions; track option.id) {
+                    <option [value]="option.id">{{ option.name }}</option>
+                  }
+                </select>
+              </div>
+            }
+          </app-mortise-heatmap>
+        }
+      </div>
+    </div>
   } @else {
     <p class="text-body-secondary">Cargando métricas…</p>
   }

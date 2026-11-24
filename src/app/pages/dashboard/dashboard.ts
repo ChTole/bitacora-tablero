@@ -3,6 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
 import { DurationRange } from '../../charts/duration-range';
+import { FailureReasons } from '../../charts/failure-reasons';
+import { MortiseHeatmap } from '../../charts/mortise-heatmap';
 import { FurnitureRates } from '../../charts/furniture-rates';
 import { HelpImpact } from '../../charts/help-impact';
 import { OutcomeDonut } from '../../charts/outcome-donut';
@@ -17,7 +19,7 @@ type Device = 'all' | 'desktop' | 'mobile';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink, OutcomeDonut, TimelineChart, FurnitureRates, DurationRange, HelpImpact],
+  imports: [RouterLink, OutcomeDonut, TimelineChart, FurnitureRates, DurationRange, HelpImpact, FailureReasons, MortiseHeatmap],
   templateUrl: './dashboard.html',
 })
 export class Dashboard {
@@ -40,6 +42,13 @@ export class Dashboard {
     to: this.to() || null,
   }));
 
+  /**
+   * Cada mueble tiene sus propias cajas: el mapa de calor siempre muestra uno. Usa el del filtro o,
+   * si el filtro está en "Todos", el que se elige dentro de la tarjeta.
+   */
+  protected readonly heatmapChoice = signal<string>(FURNITURE[0].id);
+  protected readonly heatmapFurniture = computed(() => this.furniture() || this.heatmapChoice());
+
   protected readonly simulations = this.api.simulations();
   protected readonly summary = this.api.summary(this.simulationId, this.filters);
   protected readonly byFurniture = this.api.summary(this.simulationId, this.filters, () => 'furniture_id');
@@ -50,8 +59,14 @@ export class Dashboard {
     Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
 
+  protected readonly failures = this.api.failures(this.simulationId, () => ({
+    ...this.filters(),
+    furniture_id: this.heatmapFurniture(),
+  }));
+
   // value() lanza un error si la consulta falló: hasValue() permite mostrar el resto del tablero igual
   protected readonly timelineDays = computed(() => (this.timeline.hasValue() ? this.timeline.value().days : []));
+  protected readonly mortises = computed(() => (this.failures.hasValue() ? this.failures.value().mortises : []));
   protected readonly furnitureGroups = computed(() =>
     this.byFurniture.hasValue() ? (this.byFurniture.value().groups ?? []) : [],
   );
