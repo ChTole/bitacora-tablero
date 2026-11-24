@@ -2,7 +2,7 @@ import { httpResource } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
-import { Filters, GroupBy, SimulationList, Summary } from './models';
+import { Filters, GroupBy, SimulationList, Summary, Timeline } from './models';
 
 const BASE = `${environment.apiBaseUrl}/stats/v1`;
 
@@ -35,5 +35,12 @@ export class StatsApi {
         params: toParams(filters(), group ? { group_by: group } : {}),
       };
     });
+  }
+
+  timeline(simulationId: () => string, filters: () => Filters, tz: string) {
+    return httpResource<Timeline>(() => ({
+      url: `${BASE}/simulations/${simulationId()}/timeline`,
+      params: toParams(filters(), { tz }),
+    }));
   }
 }

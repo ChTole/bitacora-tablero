@@ -42,7 +42,8 @@
 
   @if (summary.error()) {
     <div class="alert alert-danger">No se pudieron cargar las métricas.</div>
-  } @else if (summary.value(); as data) {
+  } @else if (summary.hasValue()) {
+    @let data = summary.value();
     <div class="row g-3" [class.opacity-50]="summary.isLoading()">
       <!-- Tarjetas KPI -->
       <div class="col-6 col-lg">
@@ -79,6 +80,37 @@
           <div class="kpi-value">{{ formatRate(data.metrics.help.usage_rate) }}</div>
           <div class="kpi-note">Mediana: {{ formatSeconds(data.metrics.help.median_seconds) }}</div>
         </div></div>
+      </div>
+    </div>
+
+    <!-- Resumen y evolución -->
+    <div class="row g-3 mt-1" [class.opacity-50]="summary.isLoading()">
+      <div class="col-lg-4">
+        <app-outcome-donut [sessions]="data.sessions" />
+      </div>
+      <div class="col-lg-8">
+        @if (timeline.error()) {
+          <div class="alert alert-warning h-100 mb-0">No se pudieron cargar las sesiones por día.</div>
+        } @else {
+          <app-timeline-chart [days]="timelineDays()" />
+        }
+      </div>
+    </div>
+
+    <!-- Comparación -->
+    <h2 class="h4 mt-5 mb-3">Comparación</h2>
+    @if (byFurniture.error()) {
+      <div class="alert alert-warning">No se pudo cargar la comparación por mueble.</div>
+    }
+    <div class="row g-3" [class.opacity-50]="byFurniture.isLoading()">
+      <div class="col-lg-6">
+        <app-furniture-rates [groups]="furnitureGroups()" />
+      </div>
+      <div class="col-lg-6">
+        <app-duration-range [groups]="furnitureGroups()" />
+      </div>
+      <div class="col-lg-6">
+        <app-help-impact [metrics]="data.metrics" />
       </div>
     </div>
   } @else {

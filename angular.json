@@ -43,14 +43,17 @@
                   "if-function"
                 ]
               }
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "echarts/i18n/langES-obj.js"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "600kB",
                   "maximumError": "1MB"
                 },
                 {

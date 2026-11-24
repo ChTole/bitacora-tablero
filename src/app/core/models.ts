@@ -65,3 +65,16 @@ export interface Summary {
 }
 
 export type GroupBy = 'furniture_id' | 'mobile' | 'app_version';
+
+export interface TimelineDay {
+  date: string;
+  sessions: number;
+  checked: number;
+  correct: number;
+}
+
+export interface Timeline {
+  simulation_id: string;
+  tz: string;
+  days: TimelineDay[];
+}

@@ -2,6 +2,12 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
+import { DurationRange } from '../../charts/duration-range';
+import { FurnitureRates } from '../../charts/furniture-rates';
+import { HelpImpact } from '../../charts/help-impact';
+import { OutcomeDonut } from '../../charts/outcome-donut';
+import { TimelineChart } from '../../charts/timeline-chart';
+
 import { formatRate, formatSeconds, formatSessions } from '../../core/format';
 import { FURNITURE } from '../../core/furniture';
 import { Filters } from '../../core/models';
@@ -11,7 +17,7 @@ type Device = 'all' | 'desktop' | 'mobile';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink],
+  imports: [RouterLink, OutcomeDonut, TimelineChart, FurnitureRates, DurationRange, HelpImpact],
   templateUrl: './dashboard.html',
 })
 export class Dashboard {
@@ -36,10 +42,23 @@ export class Dashboard {
 
   protected readonly simulations = this.api.simulations();
   protected readonly summary = this.api.summary(this.simulationId, this.filters);
+  protected readonly byFurniture = this.api.summary(this.simulationId, this.filters, () => 'furniture_id');
+  /** Los días se agrupan en la zona horaria de quien mira el tablero. */
+  protected readonly timeline = this.api.timeline(
+    this.simulationId,
+    this.filters,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+  );
+
+  // value() lanza un error si la consulta falló: hasValue() permite mostrar el resto del tablero igual
+  protected readonly timelineDays = computed(() => (this.timeline.hasValue() ? this.timeline.value().days : []));
+  protected readonly furnitureGroups = computed(() =>
+    this.byFurniture.hasValue() ? (this.byFurniture.value().groups ?? []) : [],
+  );
 
   protected readonly simulationName = computed(
     () =>
-      this.simulations.value()?.simulations.find((s) => s.simulation_id === this.simulationId())?.name ??
+      (this.simulations.hasValue() ? this.simulations.value().simulations : []).find((s) => s.simulation_id === this.simulationId())?.name ??
       this.simulationId(),
   );
 

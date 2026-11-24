@@ -8,11 +8,17 @@ import {
   DatasetComponent,
   GridComponent,
   LegendComponent,
+  TitleComponent,
   TooltipComponent,
   VisualMapComponent,
 } from 'echarts/components';
 import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
+// @ts-expect-error: ECharts no publica tipos para sus archivos de idioma
+import langES from 'echarts/i18n/langES-obj.js';
+
+// Textos propios de ECharts (descripciones de accesibilidad, por ejemplo) en castellano
+echarts.registerLocale('ES', langES);
 
 echarts.use([
   BarChart,
@@ -25,6 +31,7 @@ echarts.use([
   DatasetComponent,
   GridComponent,
   LegendComponent,
+  TitleComponent,
   TooltipComponent,
   VisualMapComponent,
   CanvasRenderer,

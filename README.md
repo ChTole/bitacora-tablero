@@ -11,7 +11,8 @@ Consume la API de solo lectura de [Bitácora API](https://github.com/ChTole/bita
 - [x] Estructura del proyecto, tema visual y acceso a la API.
 - [x] Página principal con las simulaciones.
 - [x] Tablero de una simulación: filtros y tarjetas de métricas.
-- [ ] Gráficos: resultado, evolución, comparación por mueble y dificultades.
+- [x] Gráficos de resumen, evolución y comparación por mueble.
+- [ ] Gráficos de dificultades: fallas por motivo y por caja.
 - [ ] Sesiones: búsqueda por alias y recorrido de una sesión.
 - [ ] Publicación en Netlify.
 
@@ -63,7 +64,7 @@ En producción, el dominio del tablero tiene que estar en `CORS_ALLOWED_ORIGINS`
 ```
 src/app/
 ├── core/          Acceso a la API, tipos, formatos y estado del servidor
-├── charts/        Módulos de ECharts que usa el tablero
+├── charts/        Gráficos, su paleta y los módulos de ECharts que usan
 └── pages/         Una carpeta por página: inicio y tablero de una simulación
 ```
 

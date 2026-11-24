@@ -22,3 +22,9 @@ export function formatSeconds(seconds: number | null | undefined): string {
 export function formatSessions(count: number): string {
   return `${count.toLocaleString('es-AR')} ${count === 1 ? 'sesión' : 'sesiones'}`;
 }
+
+/** 71.2 → "71,2 %" (para valores que ya son porcentajes, como los de los gráficos) */
+export function formatPercent(value: number | null | undefined, decimals = 1): string {
+  if (value === null || value === undefined) return NO_DATA;
+  return `${value.toLocaleString('es-AR', { maximumFractionDigits: decimals })} %`;
+}

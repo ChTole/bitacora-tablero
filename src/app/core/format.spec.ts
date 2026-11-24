@@ -1,4 +1,4 @@
-import { formatRate, formatSeconds, formatSessions } from './format';
+import { formatPercent, formatRate, formatSeconds, formatSessions } from './format';
 import { furnitureName } from './furniture';
 import { toParams } from './stats-api';
 
@@ -14,6 +14,12 @@ describe('formatos', () => {
     expect(formatSeconds(45)).toBe('45 s');
     expect(formatSeconds(120)).toBe('2 min');
     expect(formatSeconds(null)).toBe('—');
+  });
+
+  it('formatea porcentajes con coma decimal', () => {
+    expect(formatPercent(71.2)).toBe('71,2 %');
+    expect(formatPercent(10.66, 0)).toBe('11 %');
+    expect(formatPercent(null)).toBe('—');
   });
 
   it('usa singular y plural', () => {

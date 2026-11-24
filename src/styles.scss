@@ -30,3 +30,17 @@ $border-radius: 0.5rem;
 .hero {
   background-color: #e9fffb;
 }
+
+// Gráficos: alto fijo para que ECharts pueda medir el contenedor
+.chart {
+  height: 300px;
+  width: 100%;
+}
+
+.chart-sm {
+  height: 220px;
+}
+
+details > summary {
+  cursor: pointer;
+}
