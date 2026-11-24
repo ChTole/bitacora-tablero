@@ -1,0 +1,17 @@
+# Entorno de desarrollo: servidor de Angular con recarga automática.
+# Uso: docker compose -f docker-compose-dev.yml up
+# La API se levanta aparte, desde el repo bitacora-api, y el navegador la llama en 127.0.0.1:8000.
+
+name: bitacora-tablero
+
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:4200:4200"
+    volumes:
+      - .:/app                         # el código se edita en el repo y se refleja en el contenedor
+      - node_modules:/app/node_modules # las dependencias quedan en el contenedor, no en el repo
+
+volumes:
+  node_modules:

@@ -1,0 +1,39 @@
+<section class="hero py-5 mb-4">
+  <div class="container">
+    <h1 class="mb-2">Tablero de Bitácora</h1>
+    <p class="lead mb-0">
+      Cómo se resuelven las simulaciones: tiempos, errores, uniones y uso de la ayuda, a partir de la
+      telemetría anónima de cada sesión.
+    </p>
+  </div>
+</section>
+
+<div class="container">
+  <h2 class="h4 mb-3">Simulaciones</h2>
+
+  @if (simulations.isLoading()) {
+    <p class="text-body-secondary">Cargando…</p>
+  } @else if (simulations.error()) {
+    <div class="alert alert-danger">No se pudieron cargar las simulaciones.</div>
+  } @else {
+    <div class="row g-3">
+      @for (simulation of simulations.value()?.simulations ?? []; track simulation.simulation_id) {
+        <div class="col-md-6 col-lg-4">
+          <a class="card h-100 text-decoration-none shadow-sm" [routerLink]="['/', simulation.simulation_id]">
+            <div class="card-body">
+              <h3 class="h5 card-title">{{ simulation.name }}</h3>
+              <p class="card-text mb-1">{{ formatSessions(simulation.sessions) }}</p>
+              @if (simulation.last_session_at) {
+                <p class="card-text small text-body-secondary">
+                  Última sesión: {{ simulation.last_session_at | date: 'd/M/yyyy, HH:mm' }}
+                </p>
+              }
+            </div>
+          </a>
+        </div>
+      } @empty {
+        <p class="text-body-secondary">Todavía no hay simulaciones registradas.</p>
+      }
+    </div>
+  }
+</div>

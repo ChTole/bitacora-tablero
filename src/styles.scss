@@ -1,0 +1,32 @@
+// La tipografía Lato se carga como paquete (@fontsource/lato) desde angular.json, sin Google Fonts.
+
+// Paleta compartida con el portfolio y el Taller de Ensamblado
+$primary: #2b4a57;
+$danger: #8c2f1e;
+$warning: #7a5a12;
+$body-color: #4a5a61;
+$headings-color: #2b4a57;
+$body-bg: #f4f5f5;
+$font-family-sans-serif: 'Lato', 'Segoe UI', system-ui, -apple-system, sans-serif;
+$link-color: $primary;
+$border-radius: 0.5rem;
+
+@import 'bootstrap/scss/bootstrap';
+
+// ───────────── Propios del tablero ─────────────
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: $headings-color;
+}
+
+.kpi-note {
+  font-size: 0.85rem;
+  color: $text-muted;
+}
+
+.hero {
+  background-color: #e9fffb;
+}

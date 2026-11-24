@@ -1,0 +1,87 @@
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Simulaciones</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ simulationName() }}</li>
+    </ol>
+  </nav>
+
+  <h1 class="h2 mb-4">{{ simulationName() }}</h1>
+
+  <!-- Filtros -->
+  <form class="row g-3 align-items-end mb-4" (submit)="$event.preventDefault()">
+    <div class="col-sm-6 col-lg-3">
+      <label class="form-label" for="furniture">Mueble</label>
+      <select id="furniture" class="form-select" [value]="furniture()" (change)="furniture.set($any($event.target).value)">
+        <option value="">Todos</option>
+        @for (option of furnitureOptions; track option.id) {
+          <option [value]="option.id">{{ option.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <label class="form-label" for="device">Dispositivo</label>
+      <select id="device" class="form-select" [value]="device()" (change)="device.set($any($event.target).value)">
+        <option value="all">Todos</option>
+        <option value="desktop">Escritorio</option>
+        <option value="mobile">Móvil</option>
+      </select>
+    </div>
+    <div class="col-sm-6 col-lg-2">
+      <label class="form-label" for="from">Desde</label>
+      <input id="from" type="date" class="form-control" [value]="from()" (change)="from.set($any($event.target).value)" />
+    </div>
+    <div class="col-sm-6 col-lg-2">
+      <label class="form-label" for="to">Hasta</label>
+      <input id="to" type="date" class="form-control" [value]="to()" (change)="to.set($any($event.target).value)" />
+    </div>
+    <div class="col-lg-2">
+      <button type="button" class="btn btn-outline-primary w-100" (click)="clearFilters()">Limpiar</button>
+    </div>
+  </form>
+
+  @if (summary.error()) {
+    <div class="alert alert-danger">No se pudieron cargar las métricas.</div>
+  } @else if (summary.value(); as data) {
+    <div class="row g-3" [class.opacity-50]="summary.isLoading()">
+      <!-- Tarjetas KPI -->
+      <div class="col-6 col-lg">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <div class="text-body-secondary small">Sesiones</div>
+          <div class="kpi-value">{{ data.sessions.total }}</div>
+          <div class="kpi-note">{{ data.sessions.active }} en curso</div>
+        </div></div>
+      </div>
+      <div class="col-6 col-lg">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <div class="text-body-secondary small">Finalización</div>
+          <div class="kpi-value">{{ formatRate(data.metrics.finish_rate) }}</div>
+          <div class="kpi-note">Comprobaron el armado</div>
+        </div></div>
+      </div>
+      <div class="col-6 col-lg">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <div class="text-body-secondary small">Resolución correcta</div>
+          <div class="kpi-value">{{ formatRate(data.metrics.correct_rate) }}</div>
+          <div class="kpi-note">De las comprobadas</div>
+        </div></div>
+      </div>
+      <div class="col-6 col-lg">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <div class="text-body-secondary small">Tiempo mediano</div>
+          <div class="kpi-value">{{ formatSeconds(data.metrics.duration_seconds.median) }}</div>
+          <div class="kpi-note">{{ formatSessions(data.metrics.duration_seconds.sessions) }} correctas</div>
+        </div></div>
+      </div>
+      <div class="col-12 col-lg">
+        <div class="card h-100 shadow-sm"><div class="card-body">
+          <div class="text-body-secondary small">Uso de la ayuda</div>
+          <div class="kpi-value">{{ formatRate(data.metrics.help.usage_rate) }}</div>
+          <div class="kpi-note">Mediana: {{ formatSeconds(data.metrics.help.median_seconds) }}</div>
+        </div></div>
+      </div>
+    </div>
+  } @else {
+    <p class="text-body-secondary">Cargando métricas…</p>
+  }
+</div>
