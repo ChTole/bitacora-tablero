@@ -1,11 +1,11 @@
 import { Component, computed, input } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 
-import { formatPercent, formatRate } from '../core/format';
-import { Metrics } from '../core/models';
-import { BAR_END_VERTICAL, BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, PERCENT_AXIS } from './base-options';
-import { ChartCard } from './chart-card';
-import { INK, SERIES } from './palette';
+import { formatPercent, formatRate } from '../../core/format';
+import { Metrics } from '../../core/models';
+import { BAR_END_VERTICAL, BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, PERCENT_AXIS } from '../base-options';
+import { ChartCard } from '../chart-card/chart-card';
+import { INK, SERIES } from '../palette';
 
 const toPercent = (rate: number | null) => (rate === null ? null : Math.round(rate * 1000) / 10);
 
@@ -13,16 +13,7 @@ const toPercent = (rate: number | null) => (rate === null ? null : Math.round(ra
 @Component({
   selector: 'app-help-impact',
   imports: [NgxEchartsDirective, ChartCard],
-  template: `
-    <app-chart-card
-      title="Resolución correcta según el uso de la ayuda"
-      note="Sobre las sesiones comprobadas."
-      [columns]="['Ayuda', 'Resolución correcta']"
-      [rows]="rows()"
-    >
-      <div echarts class="chart chart-sm" [options]="options()" [initOpts]="initOpts"></div>
-    </app-chart-card>
-  `,
+  templateUrl: './help-impact.html',
 })
 export class HelpImpact {
   readonly metrics = input.required<Metrics>();

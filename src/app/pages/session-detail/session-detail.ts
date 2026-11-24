@@ -3,7 +3,7 @@ import { Component, computed, effect, inject, input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
-import { SessionJourney } from '../../charts/session-journey';
+import { SessionJourney } from '../../charts/session-journey/session-journey';
 import { formatSeconds } from '../../core/format';
 import { furnitureName } from '../../core/furniture';
 import { sessionOutcome } from '../../core/sessions';

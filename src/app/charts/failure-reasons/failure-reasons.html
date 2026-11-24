@@ -1,0 +1,12 @@
+<app-chart-card
+  title="Intentos fallidos por motivo"
+  [note]="note()"
+  [columns]="['Motivo', 'Intentos', 'Proporción']"
+  [rows]="rows()"
+>
+  @if (total() > 0) {
+    <div echarts class="chart chart-sm" [options]="options()" [initOpts]="initOpts"></div>
+  } @else {
+    <p class="text-body-secondary">Todavía no hay intentos fallidos.</p>
+  }
+</app-chart-card>

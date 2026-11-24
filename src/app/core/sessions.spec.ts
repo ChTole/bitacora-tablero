@@ -1,4 +1,4 @@
-import { eventDetail, secondsFromStart } from '../charts/session-journey';
+import { eventDetail, secondsFromStart } from '../charts/session-journey/session-journey';
 import { SessionItem } from './models';
 import { formatClock, sessionOutcome } from './sessions';
 

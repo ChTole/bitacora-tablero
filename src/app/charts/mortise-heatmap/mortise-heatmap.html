@@ -1,0 +1,19 @@
+<app-chart-card
+  title="Dónde y por qué fallan los encastres"
+  note="Intentos fallidos en cada caja, por motivo. Las cajas están ordenadas de más a menos fallas."
+  [columns]="columns()"
+  [rows]="rows()"
+>
+  <ng-content />
+  @if (mortises().length) {
+    <div
+      echarts
+      class="chart"
+      [style.height.px]="height()"
+      [options]="options()"
+      [initOpts]="initOpts"
+    ></div>
+  } @else {
+    <p class="text-body-secondary">Todavía no hay intentos fallidos para este mueble.</p>
+  }
+</app-chart-card>

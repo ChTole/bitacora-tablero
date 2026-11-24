@@ -1,10 +1,10 @@
 import { Component, computed, input } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 
-import { TimelineDay } from '../core/models';
-import { BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, VALUE_AXIS } from './base-options';
-import { ChartCard } from './chart-card';
-import { SERIES } from './palette';
+import { TimelineDay } from '../../core/models';
+import { BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, VALUE_AXIS } from '../base-options';
+import { ChartCard } from '../chart-card/chart-card';
+import { SERIES } from '../palette';
 
 const DAY_MS = 86_400_000;
 
@@ -31,20 +31,7 @@ function shortDate(date: string): string {
 @Component({
   selector: 'app-timeline-chart',
   imports: [NgxEchartsDirective, ChartCard],
-  template: `
-    <app-chart-card
-      title="Sesiones por día"
-      note="Por fecha de inicio, en tu zona horaria"
-      [columns]="['Día', 'Sesiones', 'Comprobadas', 'Correctas']"
-      [rows]="rows()"
-    >
-      @if (filled().length) {
-        <div echarts class="chart" [options]="options()" [initOpts]="initOpts"></div>
-      } @else {
-        <p class="text-body-secondary">Todavía no hay sesiones en este período.</p>
-      }
-    </app-chart-card>
-  `,
+  templateUrl: './timeline-chart.html',
 })
 export class TimelineChart {
   readonly days = input.required<TimelineDay[]>();

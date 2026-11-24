@@ -2,13 +2,13 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
-import { DurationRange } from '../../charts/duration-range';
-import { FailureReasons } from '../../charts/failure-reasons';
-import { MortiseHeatmap } from '../../charts/mortise-heatmap';
-import { FurnitureRates } from '../../charts/furniture-rates';
-import { HelpImpact } from '../../charts/help-impact';
-import { OutcomeDonut } from '../../charts/outcome-donut';
-import { TimelineChart } from '../../charts/timeline-chart';
+import { DurationRange } from '../../charts/duration-range/duration-range';
+import { FailureReasons } from '../../charts/failure-reasons/failure-reasons';
+import { MortiseHeatmap } from '../../charts/mortise-heatmap/mortise-heatmap';
+import { FurnitureRates } from '../../charts/furniture-rates/furniture-rates';
+import { HelpImpact } from '../../charts/help-impact/help-impact';
+import { OutcomeDonut } from '../../charts/outcome-donut/outcome-donut';
+import { TimelineChart } from '../../charts/timeline-chart/timeline-chart';
 
 import { formatRate, formatSeconds, formatSessions } from '../../core/format';
 import { FURNITURE } from '../../core/furniture';

@@ -1,0 +1,8 @@
+<app-chart-card
+  title="Resolución correcta según el uso de la ayuda"
+  note="Sobre las sesiones comprobadas."
+  [columns]="['Ayuda', 'Resolución correcta']"
+  [rows]="rows()"
+>
+  <div echarts class="chart chart-sm" [options]="options()" [initOpts]="initOpts"></div>
+</app-chart-card>

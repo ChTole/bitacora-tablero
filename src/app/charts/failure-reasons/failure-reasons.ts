@@ -1,25 +1,17 @@
 import { Component, computed, input } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 
-import { REASONS, reasonName } from '../core/failures';
-import { formatPercent } from '../core/format';
-import { BAR_END_HORIZONTAL, BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, VALUE_AXIS } from './base-options';
-import { ChartCard } from './chart-card';
-import { INK, SERIES } from './palette';
+import { REASONS, reasonName } from '../../core/failures';
+import { formatPercent } from '../../core/format';
+import { BAR_END_HORIZONTAL, BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, VALUE_AXIS } from '../base-options';
+import { ChartCard } from '../chart-card/chart-card';
+import { INK, SERIES } from '../palette';
 
 /** Barras horizontales: intentos fallidos por motivo, de mayor a menor (una sola serie). */
 @Component({
   selector: 'app-failure-reasons',
   imports: [NgxEchartsDirective, ChartCard],
-  template: `
-    <app-chart-card title="Intentos fallidos por motivo" [note]="note()" [columns]="['Motivo', 'Intentos', 'Proporción']" [rows]="rows()">
-      @if (total() > 0) {
-        <div echarts class="chart chart-sm" [options]="options()" [initOpts]="initOpts"></div>
-      } @else {
-        <p class="text-body-secondary">Todavía no hay intentos fallidos.</p>
-      }
-    </app-chart-card>
-  `,
+  templateUrl: './failure-reasons.html',
 })
 export class FailureReasons {
   readonly reasons = input.required<Record<string, number>>();

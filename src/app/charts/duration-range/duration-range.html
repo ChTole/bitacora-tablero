@@ -1,0 +1,12 @@
+<app-chart-card
+  title="Tiempo de armado por mueble"
+  note="Sesiones correctas. La barra va del 25 % al 75 % de los tiempos; la marca es la mediana."
+  [columns]="['Mueble', 'Cuartil 25', 'Mediana', 'Cuartil 75', 'Sesiones']"
+  [rows]="rows()"
+>
+  @if (items().length) {
+    <div echarts class="chart" [options]="options()" [initOpts]="initOpts"></div>
+  } @else {
+    <p class="text-body-secondary">Todavía no hay sesiones correctas.</p>
+  }
+</app-chart-card>

@@ -1,11 +1,11 @@
 import { Component, computed, input } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 
-import { REASONS, mortiseName, reasonName } from '../core/failures';
-import { MortiseFailures } from '../core/models';
-import { BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS } from './base-options';
-import { ChartCard } from './chart-card';
-import { INK, SEQUENTIAL } from './palette';
+import { REASONS, mortiseName, reasonName } from '../../core/failures';
+import { MortiseFailures } from '../../core/models';
+import { BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS } from '../base-options';
+import { ChartCard } from '../chart-card/chart-card';
+import { INK, SEQUENTIAL } from '../palette';
 
 /**
  * Mapa de calor: cajas (filas) por motivo de falla (columnas), para un mueble. Un solo tono, de claro
@@ -14,21 +14,7 @@ import { INK, SEQUENTIAL } from './palette';
 @Component({
   selector: 'app-mortise-heatmap',
   imports: [NgxEchartsDirective, ChartCard],
-  template: `
-    <app-chart-card
-      title="Dónde y por qué fallan los encastres"
-      note="Intentos fallidos en cada caja, por motivo. Las cajas están ordenadas de más a menos fallas."
-      [columns]="columns()"
-      [rows]="rows()"
-    >
-      <ng-content />
-      @if (mortises().length) {
-        <div echarts class="chart" [style.height.px]="height()" [options]="options()" [initOpts]="initOpts"></div>
-      } @else {
-        <p class="text-body-secondary">Todavía no hay intentos fallidos para este mueble.</p>
-      }
-    </app-chart-card>
-  `,
+  templateUrl: './mortise-heatmap.html',
 })
 export class MortiseHeatmap {
   readonly mortises = input.required<MortiseFailures[]>();

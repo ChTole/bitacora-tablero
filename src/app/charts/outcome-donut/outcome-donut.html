@@ -1,0 +1,12 @@
+<app-chart-card
+  title="Resultado de las sesiones"
+  note="Sesiones cerradas, según cómo terminaron"
+  [columns]="['Resultado', 'Sesiones']"
+  [rows]="rows()"
+>
+  @if (closed() > 0) {
+    <div echarts class="chart" [options]="options()" [initOpts]="initOpts"></div>
+  } @else {
+    <p class="text-body-secondary">Todavía no hay sesiones cerradas.</p>
+  }
+</app-chart-card>

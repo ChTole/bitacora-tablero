@@ -1,0 +1,8 @@
+<app-chart-card
+  title="Recorrido de la sesión"
+  note="Cada evento en el momento en que ocurrió, desde el inicio del armado."
+  [columns]="['Tiempo', 'Evento', 'Detalle']"
+  [rows]="rows()"
+>
+  <div echarts class="chart" [options]="options()" [initOpts]="initOpts"></div>
+</app-chart-card>

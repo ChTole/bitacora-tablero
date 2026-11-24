@@ -1,0 +1,12 @@
+<app-chart-card
+  title="Finalización y resolución por mueble"
+  note="Finalización: sobre las sesiones cerradas. Resolución correcta: sobre las comprobadas."
+  [columns]="['Mueble', 'Finalización', 'Resolución correcta', 'Sesiones']"
+  [rows]="rows()"
+>
+  @if (groups().length) {
+    <div echarts class="chart" [options]="options()" [initOpts]="initOpts"></div>
+  } @else {
+    <p class="text-body-secondary">Todavía no hay sesiones con mueble.</p>
+  }
+</app-chart-card>

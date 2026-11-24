@@ -1,12 +1,12 @@
 import { Component, computed, input } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 
-import { formatPercent, formatRate } from '../core/format';
-import { furnitureName } from '../core/furniture';
-import { SummaryGroup } from '../core/models';
-import { BAR_END_VERTICAL, BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, PERCENT_AXIS } from './base-options';
-import { ChartCard } from './chart-card';
-import { INK, SERIES } from './palette';
+import { formatPercent, formatRate } from '../../core/format';
+import { furnitureName } from '../../core/furniture';
+import { SummaryGroup } from '../../core/models';
+import { BAR_END_VERTICAL, BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, PERCENT_AXIS } from '../base-options';
+import { ChartCard } from '../chart-card/chart-card';
+import { INK, SERIES } from '../palette';
 
 const toPercent = (rate: number | null) => (rate === null ? null : Math.round(rate * 1000) / 10);
 
@@ -14,20 +14,7 @@ const toPercent = (rate: number | null) => (rate === null ? null : Math.round(ra
 @Component({
   selector: 'app-furniture-rates',
   imports: [NgxEchartsDirective, ChartCard],
-  template: `
-    <app-chart-card
-      title="Finalización y resolución por mueble"
-      note="Finalización: sobre las sesiones cerradas. Resolución correcta: sobre las comprobadas."
-      [columns]="['Mueble', 'Finalización', 'Resolución correcta', 'Sesiones']"
-      [rows]="rows()"
-    >
-      @if (groups().length) {
-        <div echarts class="chart" [options]="options()" [initOpts]="initOpts"></div>
-      } @else {
-        <p class="text-body-secondary">Todavía no hay sesiones con mueble.</p>
-      }
-    </app-chart-card>
-  `,
+  templateUrl: './furniture-rates.html',
 })
 export class FurnitureRates {
   readonly groups = input.required<SummaryGroup[]>();

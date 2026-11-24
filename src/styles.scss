@@ -44,3 +44,11 @@ $border-radius: 0.5rem;
 details > summary {
   cursor: pointer;
 }
+
+// Punto de color del resultado de una sesión (siempre acompañado por su texto)
+.outcome-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}

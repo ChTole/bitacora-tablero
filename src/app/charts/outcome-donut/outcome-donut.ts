@@ -1,25 +1,17 @@
 import { Component, computed, input } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 
-import { formatPercent } from '../core/format';
-import { SessionCounts } from '../core/models';
-import { BASE_OPTIONS, INIT_OPTS } from './base-options';
-import { ChartCard } from './chart-card';
-import { INK, SERIES } from './palette';
+import { formatPercent } from '../../core/format';
+import { SessionCounts } from '../../core/models';
+import { BASE_OPTIONS, INIT_OPTS } from '../base-options';
+import { ChartCard } from '../chart-card/chart-card';
+import { INK, SERIES } from '../palette';
 
 /** Dona: resultado de las sesiones cerradas (partes de un total, tres partes). */
 @Component({
   selector: 'app-outcome-donut',
   imports: [NgxEchartsDirective, ChartCard],
-  template: `
-    <app-chart-card title="Resultado de las sesiones" note="Sesiones cerradas, según cómo terminaron" [columns]="['Resultado', 'Sesiones']" [rows]="rows()">
-      @if (closed() > 0) {
-        <div echarts class="chart" [options]="options()" [initOpts]="initOpts"></div>
-      } @else {
-        <p class="text-body-secondary">Todavía no hay sesiones cerradas.</p>
-      }
-    </app-chart-card>
-  `,
+  templateUrl: './outcome-donut.html',
 })
 export class OutcomeDonut {
   readonly sessions = input.required<SessionCounts>();

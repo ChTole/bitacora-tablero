@@ -1,12 +1,12 @@
 import { Component, computed, input } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 
-import { formatSeconds } from '../core/format';
-import { furnitureName } from '../core/furniture';
-import { SummaryGroup } from '../core/models';
-import { BAR_END_HORIZONTAL, BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, VALUE_AXIS } from './base-options';
-import { ChartCard } from './chart-card';
-import { INK, SERIES } from './palette';
+import { formatSeconds } from '../../core/format';
+import { furnitureName } from '../../core/furniture';
+import { SummaryGroup } from '../../core/models';
+import { BAR_END_HORIZONTAL, BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, VALUE_AXIS } from '../base-options';
+import { ChartCard } from '../chart-card/chart-card';
+import { INK, SERIES } from '../palette';
 
 /**
  * Barras de rango: el tiempo típico de armado por mueble, del cuartil 25 al 75, con la mediana
@@ -15,20 +15,7 @@ import { INK, SERIES } from './palette';
 @Component({
   selector: 'app-duration-range',
   imports: [NgxEchartsDirective, ChartCard],
-  template: `
-    <app-chart-card
-      title="Tiempo de armado por mueble"
-      note="Sesiones correctas. La barra va del 25 % al 75 % de los tiempos; la marca es la mediana."
-      [columns]="['Mueble', 'Cuartil 25', 'Mediana', 'Cuartil 75', 'Sesiones']"
-      [rows]="rows()"
-    >
-      @if (items().length) {
-        <div echarts class="chart" [options]="options()" [initOpts]="initOpts"></div>
-      } @else {
-        <p class="text-body-secondary">Todavía no hay sesiones correctas.</p>
-      }
-    </app-chart-card>
-  `,
+  templateUrl: './duration-range.html',
 })
 export class DurationRange {
   readonly groups = input.required<SummaryGroup[]>();

@@ -1,12 +1,12 @@
 import { Component, computed, input } from '@angular/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 
-import { mortiseName, reasonName } from '../core/failures';
-import { SessionEvent } from '../core/models';
-import { eventName, formatClock } from '../core/sessions';
-import { BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, VALUE_AXIS } from './base-options';
-import { ChartCard } from './chart-card';
-import { INK, SERIES } from './palette';
+import { mortiseName, reasonName } from '../../core/failures';
+import { SessionEvent } from '../../core/models';
+import { eventName, formatClock } from '../../core/sessions';
+import { BASE_OPTIONS, CATEGORY_AXIS, INIT_OPTS, VALUE_AXIS } from '../base-options';
+import { ChartCard } from '../chart-card/chart-card';
+import { INK, SERIES } from '../palette';
 
 /** Carriles del recorrido, de arriba abajo. */
 const LANES = ['Inicio y fin', 'Uniones', 'Intentos fallidos', 'Ayuda y controles'];
@@ -53,16 +53,7 @@ export function eventDetail(event: SessionEvent): string {
 @Component({
   selector: 'app-session-journey',
   imports: [NgxEchartsDirective, ChartCard],
-  template: `
-    <app-chart-card
-      title="Recorrido de la sesión"
-      note="Cada evento en el momento en que ocurrió, desde el inicio del armado."
-      [columns]="['Tiempo', 'Evento', 'Detalle']"
-      [rows]="rows()"
-    >
-      <div echarts class="chart" [options]="options()" [initOpts]="initOpts"></div>
-    </app-chart-card>
-  `,
+  templateUrl: './session-journey.html',
 })
 export class SessionJourney {
   readonly events = input.required<SessionEvent[]>();
