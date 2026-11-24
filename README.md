@@ -2,6 +2,8 @@
 
 Tablero de métricas de aprendizaje de las simulaciones que registran su telemetría con [Bitácora](https://github.com/ChTole/bitacora): tiempos, errores, uniones y uso de la ayuda, a partir de los datos anónimos de cada sesión.
 
+🔗 **Tablero:** [bitacora-tablero.netlify.app](https://bitacora-tablero.netlify.app)
+
 Consume la API de solo lectura de [Bitácora API](https://github.com/ChTole/bitacora-api) (`/stats/v1`), documentada en su [contrato del tablero](https://github.com/ChTole/bitacora-api/blob/main/docs/api-tablero.md). La primera simulación es el [Taller de Ensamblado](https://github.com/ChTole/taller-ensamblado).
 
 ## Estado
@@ -14,7 +16,7 @@ Consume la API de solo lectura de [Bitácora API](https://github.com/ChTole/bita
 - [x] Gráficos de resumen, evolución y comparación por mueble.
 - [x] Gráficos de dificultades: fallas por motivo y mapa de calor por caja.
 - [x] Sesiones: búsqueda por alias y recorrido de una sesión.
-- [ ] Publicación en Netlify.
+- [x] Publicación en Netlify.
 
 ## Stack
 
@@ -69,6 +71,12 @@ La URL de la API está en `src/environments`:
 En producción, el dominio del tablero tiene que estar en `CORS_ALLOWED_ORIGINS` de la API.
 
 **Servidor dormido.** La API corre en el plan gratuito de Render, que la apaga sin tráfico. Al cargar, el tablero la despierta con `/healthz` y, si tarda, muestra un aviso mientras se activa.
+
+## Despliegue
+
+Netlify compila la app con la configuración de [`netlify.toml`](netlify.toml): Node 24, `npm run build` y la carpeta `dist/bitacora-tablero/browser`. Cada push a `main` publica una versión nueva. No usa contenedores: el `Dockerfile` es solo para desarrollo.
+
+El archivo también redirige todas las rutas a `index.html`, para que Angular resuelva las páginas al abrir un enlace directo, y define la caché de los archivos de la build.
 
 ## Estructura
 
